@@ -1,0 +1,50 @@
+* {
+    box-sizing: border-box;
+}
+
+.wrapper {
+    border: red solid 1px;
+    width: 100%;
+    height: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 1px;
+    flex-direction: column;
+}
+
+.text-field {
+    width: 800px;
+    height: 100px;
+    margin: 50px 0;
+
+}
+
+.keyboard {
+    width: 800px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn {
+    width: 45px;
+    height: 45px;
+    margin: 5px;
+
+    &:last-child {
+        width: 90px;
+    }
+}
+
+.row5 {
+    .btn:nth-child(4) {
+        width: 260px;
+    }
+}
+    
+
