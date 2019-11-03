@@ -57,6 +57,7 @@ const Keyboard = {
 
         keyLayout.forEach(key => {
             const keyElement = document.createElement("button");
+            // const keyText = document.
             const insertLineBreak = ["backspace", "]", "enter", "up", ].indexOf(key) !== -1;
 
             // Add attributes/classes
@@ -121,7 +122,7 @@ const Keyboard = {
                 break;
 
                 case "Ctrl":
-                    keyElement.classList.add("keyboard__key--ctr");
+                    keyElement.classList.add("keyboard__key--ctrl");
                     keyElement.textContent = key;
 
                     // keyElement.addEventListener("click", () => {
@@ -143,7 +144,7 @@ const Keyboard = {
                 break;
 
                 case "Alt":
-                    keyElement.classList.add("keyboard__key--shift");
+                    keyElement.classList.add("keyboard__key--alt");
                     keyElement.textContent = key;
 
                     // keyElement.addEventListener("click", () => {
@@ -209,8 +210,9 @@ const Keyboard = {
                 break;
 
                 default:
+                    // keyElement.classList.add("btn--text");
                     keyElement.textContent = key.toLowerCase();
-
+            
                     // keyElement.addEventListener("click", () => {
                     //     this.properties.value += this.properties.capsLock ? key.toUpperCase() : key.toLowerCase();
                     //     this._triggerEvent("oninput");
