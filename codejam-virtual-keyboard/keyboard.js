@@ -46,8 +46,8 @@ const Keyboard = {
             "`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "backspace",
             "tab", "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]",
             "caps", "a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", "\\", "enter",
-            "Shift", "z", "x", "c", "v", "b", "n", "m", ",", ".", "?", "up",
-            "Ctrl", "win", "Alt", "space", "Alt", "left", "down", "right"
+            "Shift", "z", "x", "c", "v", "b", "n", "m", ",", ".", "?", "Shift", "up",
+            "Ctrl", "win", "Alt", "space", "Alt", "Ctrl", "left", "down", "right"
         ];
 
         // Creates HTML for an icon
@@ -156,6 +156,50 @@ const Keyboard = {
                 case "space":
                     keyElement.classList.add("keyboard__key--space");
                     keyElement.innerHTML = createIconHTML("space_bar"); 
+
+                    // keyElement.addEventListener("click", () => {
+                    //     this.properties.value = this.properties.value.substring(0, this.properties.value.length - 1);
+                    //     this._triggerEvent("oninput");
+                    // });
+
+                break;
+
+                case "up":
+                    keyElement.classList.add("keyboard__key--up");
+                    keyElement.innerHTML = createIconHTML("keyboard_arrow_up"); 
+
+                    // keyElement.addEventListener("click", () => {
+                    //     this.properties.value = this.properties.value.substring(0, this.properties.value.length - 1);
+                    //     this._triggerEvent("oninput");
+                    // });
+
+                break;
+
+                case "left":
+                    keyElement.classList.add("keyboard__key--left");
+                    keyElement.innerHTML = createIconHTML("keyboard_arrow_left"); 
+
+                    // keyElement.addEventListener("click", () => {
+                    //     this.properties.value = this.properties.value.substring(0, this.properties.value.length - 1);
+                    //     this._triggerEvent("oninput");
+                    // });
+
+                break;
+
+                case "down":
+                    keyElement.classList.add("keyboard__key--down");
+                    keyElement.innerHTML = createIconHTML("keyboard_arrow_down"); 
+
+                    // keyElement.addEventListener("click", () => {
+                    //     this.properties.value = this.properties.value.substring(0, this.properties.value.length - 1);
+                    //     this._triggerEvent("oninput");
+                    // });
+
+                break;
+
+                case "right":
+                    keyElement.classList.add("keyboard__key--right");
+                    keyElement.innerHTML = createIconHTML("keyboard_arrow_right"); 
 
                     // keyElement.addEventListener("click", () => {
                     //     this.properties.value = this.properties.value.substring(0, this.properties.value.length - 1);
