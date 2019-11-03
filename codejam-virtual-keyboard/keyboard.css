@@ -23,6 +23,11 @@
           flex-direction: column;
 }
 
+.tittle {
+  font-family: 'McLaren', 'Open Sans', cursive;
+  color: #32979D;
+}
+
 .text-field {
   width: 800px;
   height: 100px;
@@ -31,35 +36,46 @@
 
 .keyboard {
   width: 800px;
+  border: red solid 1px;
+  display: block;
+  text-align: center;
 }
 
-.row {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+.material-icons {
+  font-size: 1.2rem;
+  padding: 0;
+  margin: 0;
 }
 
-.btn {
-  width: 45px;
+.keyboard__key {
   height: 45px;
-  margin: 5px;
+  width: 45px;
+  margin: 3px;
+  font-size: 1rem;
 }
 
-.btn:last-child {
+.keyboard__key--backspace {
   width: 90px;
+  margin-top: 5px;
 }
 
-.row5 .btn:nth-child(4) {
-  width: 260px;
+.keyboard__key--tab {
+  width: 75px;
+}
+
+.keyboard__key--caps {
+  width: 75px;
+}
+
+.keyboard__key--enter {
+  width: 75px;
+}
+
+.keyboard__key--shift {
+  width: 75px;
+}
+
+.keyboard__key--space {
+  width: 315px;
 }
 /*# sourceMappingURL=keyboard.css.map */
