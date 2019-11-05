@@ -300,7 +300,10 @@ window.addEventListener("DOMContentLoaded", function () {
     Keyboard.init();
 });
 window.addEventListener("keydown", (event) => {
-   document.querySelector('.'+event.code+'').classList.add("active")
+    document.querySelectorAll('.keyboard__key').forEach((element) =>{
+        element.classList.remove("active")
+    })
+    document.querySelector('.'+event.code+'').classList.add("active")
 console.log(event.code)
 });
 
