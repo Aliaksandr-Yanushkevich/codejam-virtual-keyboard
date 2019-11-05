@@ -14,8 +14,8 @@ const Keyboard = {
 
     properties: {
         value: "",
-        capsLock: false,
-        language: "rus"
+        capsLock: true,
+        language: "eng"
     },
 
     init() {
@@ -51,12 +51,21 @@ const Keyboard = {
 
     _createKeys() {
         const fragment = document.createDocumentFragment();
+        const keysCode = ["Backquote", "Digit1", "Digit2", "Digit3", "Digit4", "Digit5",
+        "Digit6", "Digit7", "Digit8", "Digit9", "Digit0", "Minus", "Equal", "Backspace",
+        "Tab", "KeyQ", "KeyW", "KeyE", "KeyR", "KeyT", "KeyY", "KeyU", "KeyI", "KeyO",
+        "KeyP", "BracketLeft", "BracketRight", "CapsLock", "KeyA", "KeyS", "KeyD", "KeyF",
+        "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL", "Semicolon", "Quote", "Backslash", "Enter",
+        "ShiftLeft", "KeyZ", "KeyX", "KeyC", "KeyV", "KeyB", "KeyN", "KeyM", "Comma", "Period",
+        "Slash", "ShiftRight", "ArrowUp","ControlLeft", "MetaLeft", "AltLeft", "Space", "AltRight",
+        "ControlRight", "ArrowLeft", "ArrowDown", "ArrowRight"]
+
         const keyEng = [
             "`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "backspace",
             "tab", "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]",
             "caps", "a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", "\\", "enter",
-            "Shift", "z", "x", "c", "v", "b", "n", "m", ",", ".", "?", "Shift", "up",
-            "Ctrl", "win", "Alt", "space", "Alt", "Ctrl", "left", "down", "right"
+            "ShiftLeft", "z", "x", "c", "v", "b", "n", "m", ",", ".", "?", "ShiftRight", "up",
+            "ControlLeft", "win", "AltLeft", "space", "AltRight", "ControlRight", "left", "down", "right"
         ];
 
         const keyRus = [
@@ -79,9 +88,11 @@ const Keyboard = {
         keyLayout.forEach(key => {
             const keyElement = document.createElement("button");
             const insertLineBreak = ["backspace", "]", "ъ", "enter", "up", ].indexOf(key) !== -1;
-
+            let i = keyLayout.indexOf(key);
+            let keyCode = keysCode[i];
             // Add attributes/classes
             keyElement.setAttribute("type", "button");
+            keyElement.classList.add(keyCode);
             keyElement.classList.add("keyboard__key");
 
             switch (key) {
@@ -129,9 +140,9 @@ const Keyboard = {
 
                 break;
 
-                case "Shift":
+                case "ShiftLeft":
                     keyElement.classList.add("keyboard__key--shift");
-                    keyElement.textContent = key;
+                    keyElement.textContent = "Shift";
 
                     // keyElement.addEventListener("click", () => {
                     //     this.properties.value = this.properties.value.substring(0, this.properties.value.length - 1);
@@ -140,9 +151,31 @@ const Keyboard = {
 
                 break;
 
-                case "Ctrl":
+                case "ShiftRight":
+                    keyElement.classList.add("keyboard__key--shift");
+                    keyElement.textContent = "Shift";
+
+                    // keyElement.addEventListener("click", () => {
+                    //     this.properties.value = this.properties.value.substring(0, this.properties.value.length - 1);
+                    //     this._triggerEvent("oninput");
+                    // });
+
+                break;
+
+                case "ControlLeft":
                     keyElement.classList.add("keyboard__key--ctrl");
-                    keyElement.textContent = key;
+                    keyElement.textContent = "Ctrl";
+
+                    // keyElement.addEventListener("click", () => {
+                    //     this.properties.value = this.properties.value.substring(0, this.properties.value.length - 1);
+                    //     this._triggerEvent("oninput");
+                    // });
+
+                break;
+
+                case "ControlRight":
+                    keyElement.classList.add("keyboard__key--ctrl");
+                    keyElement.textContent = "Ctrl";
 
                     // keyElement.addEventListener("click", () => {
                     //     this.properties.value = this.properties.value.substring(0, this.properties.value.length - 1);
@@ -162,9 +195,20 @@ const Keyboard = {
 
                 break;
 
-                case "Alt":
+                case "AltLeft":
                     keyElement.classList.add("keyboard__key--alt");
-                    keyElement.textContent = key;
+                    keyElement.textContent = "Alt";
+
+                    // keyElement.addEventListener("click", () => {
+                    //     this.properties.value = this.properties.value.substring(0, this.properties.value.length - 1);
+                    //     this._triggerEvent("oninput");
+                    // });
+
+                break;
+
+                case "AltRight":
+                    keyElement.classList.add("keyboard__key--alt");
+                    keyElement.textContent = "Alt";
 
                     // keyElement.addEventListener("click", () => {
                     //     this.properties.value = this.properties.value.substring(0, this.properties.value.length - 1);
@@ -256,7 +300,8 @@ window.addEventListener("DOMContentLoaded", function () {
     Keyboard.init();
 });
 window.addEventListener("keydown", (event) => {
-    keys.forEach((key) => {
-        event.key == key ? event.target.style.backgroundColor = "#FF8940" : event.metaKey;
-    })
+   document.querySelector('.'+event.code+'').classList.add("active")
+console.log(event.code)
 });
+
+

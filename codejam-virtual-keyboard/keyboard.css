@@ -45,7 +45,7 @@
 }
 
 button {
-  font-family: "McLaren", "Open Sans", cursive;
+  font-family: "Source Code Pro", "Open Sans", cursive;
 }
 
 .material-icons {
@@ -100,5 +100,10 @@ button {
 
 .keyboard__key--space {
   width: 340px;
+}
+
+.active {
+  background-color: #FF8940;
+  outline: none;
 }
 /*# sourceMappingURL=keyboard.css.map */

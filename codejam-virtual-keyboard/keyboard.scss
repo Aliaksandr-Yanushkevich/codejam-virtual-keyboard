@@ -60,10 +60,12 @@ button {
     background-color: #CDD5D6;
     border: none;
     border-radius: 5px;
+
     &:active {
         background-color: #FF8940;
         outline: none;
     }
+  
     &:focus {
         outline: none;
     }
@@ -97,6 +99,11 @@ button {
     &--space {
         width: 340px;
     }
+}
+
+.active {
+    background-color: #FF8940;
+    outline: none;
 }
 
 
