@@ -14,7 +14,8 @@ const Keyboard = {
 
     properties: {
         value: "",
-        capsLock: false
+        capsLock: false,
+        language: "rus"
     },
 
     init() {
@@ -37,12 +38,20 @@ const Keyboard = {
         this.keysContainer.classList.add('keyboard', 'keyboard--hidden');
 
         this.keysContainer.appendChild(this._createKeys());
-        this.wrapper.appendChild(this.keysContainer)
+        this.wrapper.appendChild(this.keysContainer);
+        document.querySelectorAll(".text-field")
+        forEach(element => {
+            element.addEventListener("focus", () => {
+                document.open(element.value, currentValue => {
+                    element.value = currentValue;
+                });
+            });
+        });
     },
 
     _createKeys() {
         const fragment = document.createDocumentFragment();
-        const keyLayout = [
+        const keyEng = [
             "`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "backspace",
             "tab", "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]",
             "caps", "a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", "\\", "enter",
@@ -50,15 +59,26 @@ const Keyboard = {
             "Ctrl", "win", "Alt", "space", "Alt", "Ctrl", "left", "down", "right"
         ];
 
+        const keyRus = [
+            "ё", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "backspace",
+            "tab", "й", "ц", "у", "к", "е", "н", "г", "ш", "щ", "з", "х", "ъ",
+            "caps", "ф", "ы", "в", "а", "п", "р", "о", "л", "д", "ж", "э", "\\", "enter",
+            "Shift", "я", "ч", "с", "м", "и", "т", "ь", "б", "ю", ".", "Shift", "up",
+            "Ctrl", "win", "Alt", "space", "Alt", "Ctrl", "left", "down", "right"
+        ];
+
+
+
         // Creates HTML for an icon
         const createIconHTML = (icon_name) => {
             return `<i class="material-icons">${icon_name}</i>`;
         };
 
+        Keyboard.properties.language == "eng" ? keyLayout = keyEng: keyLayout = keyRus;
+
         keyLayout.forEach(key => {
             const keyElement = document.createElement("button");
-            // const keyText = document.
-            const insertLineBreak = ["backspace", "]", "enter", "up", ].indexOf(key) !== -1;
+            const insertLineBreak = ["backspace", "]", "ъ", "enter", "up", ].indexOf(key) !== -1;
 
             // Add attributes/classes
             keyElement.setAttribute("type", "button");
@@ -67,7 +87,6 @@ const Keyboard = {
             switch (key) {
                 case "backspace":
                     keyElement.classList.add("keyboard__key--backspace");
-                    // keyElement.innerHTML = "backspace";
                     keyElement.innerHTML = createIconHTML("backspace");
 
                     // keyElement.addEventListener("click", () => {
@@ -211,7 +230,8 @@ const Keyboard = {
 
                 default:
                     // keyElement.classList.add("btn--text");
-                    keyElement.textContent = key.toLowerCase();
+                   
+                    Keyboard.properties.capsLock == false ?  keyElement.textContent = key.toLowerCase() : keyElement.textContent = key.toUpperCase();
             
                     // keyElement.addEventListener("click", () => {
                     //     this.properties.value += this.properties.capsLock ? key.toUpperCase() : key.toLowerCase();
@@ -234,81 +254,9 @@ const Keyboard = {
 
 window.addEventListener("DOMContentLoaded", function () {
     Keyboard.init();
-})
-
-
-
-
-// const Keyboard = {
-//     elements: {
-//         main: null,
-//         keysContainer: null,
-//         keys: []
-//     },
-
-//     eventHandlers: {
-//         oninput: null,
-//         onclose: null
-//     },
-
-//     properties: {
-//         value: "",
-//         capsLock: false
-//     },
-
-
-
-// const keyboard = document.createElement('section');
-// keyboard.className = 'keyboard';
-// wrapper.appendChild(keyboard);
-
-// const row1 = document.createElement('div');
-// row1.className = 'row row1';
-// keyboard.appendChild(row1);
-
-// for ( let i= 0; i<14; i++) {
-//     const button = document.createElement('button');
-//     button.setAttribute('class', 'btn');
-//     row1.appendChild(button);
-// }
-
-// const row2 = document.createElement('div');
-// row2.className = 'row row2';
-// keyboard.appendChild(row2);
-
-// for ( let i= 0; i<15; i++) {
-//     const button = document.createElement('button');
-//     button.className = 'btn';
-//     row2.appendChild(button);
-// }
-
-// const row3 = document.createElement('div');
-// row3.className = 'row row3';
-// keyboard.appendChild(row3);
-
-// for ( let i= 0; i<13; i++) {
-//     const button = document.createElement('button');
-//     button.className = 'btn';
-//     row3.appendChild(button);
-// }
-
-// const row4 = document.createElement('div');
-// row4.className = 'row row4';
-// keyboard.appendChild(row4);
-
-// for ( let i= 0; i<14; i++) {
-//     const button = document.createElement('button');
-//     button.setAttribute('class', 'btn');
-//     row4.appendChild(button);
-// }
-
-// const row5 = document.createElement('div');
-// row5.className = 'row row5';
-// keyboard.appendChild(row5);
-
-// for ( let i= 0; i<9; i++) {
-//     const button = document.createElement('button');
-//     button.setAttribute('class', 'btn');
-//     row5.appendChild(button);
-// }
-
+});
+window.addEventListener("keydown", (event) => {
+    keys.forEach((key) => {
+        event.key == key ? event.target.style.backgroundColor = "#FF8940" : event.metaKey;
+    })
+});
