@@ -13,10 +13,10 @@ const Keyboard = {
     },
 
     properties: {
-        shiftHold : true,
+        shiftHold : false,
         value: "",
         capsLock: false,
-        language: "rus"
+        language: false
     },
 
     init() {
@@ -100,13 +100,13 @@ const Keyboard = {
         const createIconHTML = (icon_name) => {
             return `<i class="material-icons">${icon_name}</i>`;
         };
-        if (Keyboard.properties.language == "eng" && Keyboard.properties.shiftHold == false) {
+        if (Keyboard.properties.language == "0" && Keyboard.properties.shiftHold == false) {
            keyLayout = keyEng;
-        } else if (Keyboard.properties.language == "eng" && Keyboard.properties.shiftHold == true) {
+        } else if (Keyboard.properties.language == "0" && Keyboard.properties.shiftHold == true) {
             keyLayout = keyEngShift;
-        } else if (Keyboard.properties.language == "rus" && Keyboard.properties.shiftHold == false) {
+        } else if (Keyboard.properties.language == "1" && Keyboard.properties.shiftHold == false) {
             keyLayout = keyRus;
-        } else if (Keyboard.properties.language == "rus" && Keyboard.properties.shiftHold == true) {
+        } else if (Keyboard.properties.language == "1" && Keyboard.properties.shiftHold == true) {
             keyLayout = keyRusShift;
         } 
 
@@ -336,13 +336,38 @@ window.addEventListener("keyup", (event) => {
 
 // console.log(event.code)
 });
-
+let ShiftFlag = false;
+let AltFlag = false;
 window.addEventListener("keydown", (event) => {
+    if (event.code == "ShiftLeft" || event.code == "ShiftRight") {
+        ShiftFlag = true;
+    }
+    if (event.code == "AltLeft" || event.code == "AltRight") {
+        AltFlag = true;
+    }
+
+    if ((event.code == "AltLeft" && ShiftFlag ==true) || (event.code == "AltRight" && ShiftFlag ==true)) {
+        ShiftFlag = false;
+        Keyboard.properties.language = !Keyboard.properties.language;
+        Keyboard.init();
+        
+        console.log(Keyboard.properties.language);
+    }
+    if ((event.code == "ShiftLeft" && AltFlag ==true) || (event.code == "ShiftRight" && AltFlag ==true)) {
+        AltFlag = false;
+        // console.log('!');
+    }
     if (event.code == "CapsLock") {
         document.querySelector('.'+event.code+'').classList.toggle("active");
     } else if (event.code == "Tab") {
         event.preventDefault();
         document.querySelector('.'+event.code+'').classList.add("active");
+    // } else if {
+    //     // Keyboard.init();
+    //     console.log(Keyboard.properties.shiftHold);
+    //     document.querySelector('.'+event.code+'').classList.add("active");
+    // }
+    
     } else {
         document.querySelector('.'+event.code+'').classList.add("active");
     }
