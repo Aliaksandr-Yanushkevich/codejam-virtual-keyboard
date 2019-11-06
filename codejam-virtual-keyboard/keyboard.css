@@ -4,7 +4,6 @@
 }
 
 .wrapper {
-  border: red solid 1px;
   width: 100%;
   height: 100vh;
   display: -webkit-box;
@@ -37,7 +36,6 @@
 
 .keyboard {
   width: 900px;
-  border: red solid 1px;
   display: block;
   text-align: center;
   background-color: #32979D;
