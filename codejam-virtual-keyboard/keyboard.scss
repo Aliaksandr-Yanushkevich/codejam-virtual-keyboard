@@ -1,4 +1,4 @@
-$border: red solid 1px;
+
 $color: #32979D;
 $font: 'Source Code Pro', 'Open Sans', cursive;
 
@@ -7,7 +7,6 @@ $font: 'Source Code Pro', 'Open Sans', cursive;
 }
 
 .wrapper {
-    border: $border;
     width: 100%;
     height: 100vh;
     display: flex;
@@ -33,7 +32,6 @@ $font: 'Source Code Pro', 'Open Sans', cursive;
 
 .keyboard {
     width: 900px;
-    border: $border;
     display: block;
     text-align: center;
     background-color: $color;
@@ -60,10 +58,12 @@ button {
     background-color: #CDD5D6;
     border: none;
     border-radius: 5px;
+
     &:active {
         background-color: #FF8940;
         outline: none;
     }
+  
     &:focus {
         outline: none;
     }
@@ -84,19 +84,17 @@ button {
     &--shift {
         width: 75px;
     }
-    // &--up {
-    //     margin-left: 50px;
-    // }
-
-    // &--left {
-    // margin-left: 86px;
-    // }
     &--ctrl {
         width: 80px;
     }
     &--space {
         width: 340px;
     }
+}
+
+.active {
+    background-color: #FF8940;
+    outline: none;
 }
 
 
