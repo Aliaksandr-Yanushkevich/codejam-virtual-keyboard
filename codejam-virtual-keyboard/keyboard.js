@@ -68,6 +68,8 @@ const Keyboard = {
             "ControlLeft", "win", "AltLeft", "space", "AltRight", "ControlRight", "left", "down", "right"
         ];
 
+        
+
         const keyRus = [
             "ё", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "backspace",
             "tab", "й", "ц", "у", "к", "е", "н", "г", "ш", "щ", "з", "х", "ъ",
@@ -299,12 +301,19 @@ const Keyboard = {
 window.addEventListener("DOMContentLoaded", function () {
     Keyboard.init();
 });
-window.addEventListener("keydown", (event) => {
+window.addEventListener("keyup", (event) => {
     document.querySelectorAll('.keyboard__key').forEach((element) =>{
         element.classList.remove("active")
     })
-    document.querySelector('.'+event.code+'').classList.add("active")
-console.log(event.code)
+    // document.querySelector('.'+event.code+'').classList.add("active");
+
+// console.log(event.code)
+});
+
+window.addEventListener("keydown", (event) => {
+    document.querySelector('.'+event.code+'').classList.add("active");
+
+// console.log(event.code)
 });
 
 
