@@ -327,6 +327,7 @@ window.addEventListener("DOMContentLoaded", function () {
 });
 window.addEventListener("keyup", (event) => {
     if (event.code !== "CapsLock") {
+        event.preventDefault();
         document.querySelectorAll('.keyboard__key').forEach((element) =>{
             element.classList.remove("active")
         })
@@ -339,6 +340,9 @@ window.addEventListener("keyup", (event) => {
 window.addEventListener("keydown", (event) => {
     if (event.code == "CapsLock") {
         document.querySelector('.'+event.code+'').classList.toggle("active");
+    } else if (event.code == "Tab") {
+        event.preventDefault();
+        document.querySelector('.'+event.code+'').classList.add("active");
     } else {
         document.querySelector('.'+event.code+'').classList.add("active");
     }
