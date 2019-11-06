@@ -13,9 +13,10 @@ const Keyboard = {
     },
 
     properties: {
+        shiftHold : true,
         value: "",
-        capsLock: true,
-        language: "eng"
+        capsLock: false,
+        language: "rus"
     },
 
     init() {
@@ -50,6 +51,7 @@ const Keyboard = {
     },
 
     _createKeys() {
+        let keyLayout;
         const fragment = document.createDocumentFragment();
         const keysCode = ["Backquote", "Digit1", "Digit2", "Digit3", "Digit4", "Digit5",
         "Digit6", "Digit7", "Digit8", "Digit9", "Digit0", "Minus", "Equal", "Backspace",
@@ -58,17 +60,23 @@ const Keyboard = {
         "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL", "Semicolon", "Quote", "Backslash", "Enter",
         "ShiftLeft", "KeyZ", "KeyX", "KeyC", "KeyV", "KeyB", "KeyN", "KeyM", "Comma", "Period",
         "Slash", "ShiftRight", "ArrowUp","ControlLeft", "MetaLeft", "AltLeft", "Space", "AltRight",
-        "ControlRight", "ArrowLeft", "ArrowDown", "ArrowRight"]
+        "ControlRight", "ArrowLeft", "ArrowDown", "ArrowRight"
+    ];
 
-        const keyEng = [
-            "`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "backspace",
+        const keyEng = ["`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "backspace",
             "tab", "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]",
             "caps", "a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", "\\", "enter",
-            "ShiftLeft", "z", "x", "c", "v", "b", "n", "m", ",", ".", "?", "ShiftRight", "up",
+            "ShiftLeft", "z", "x", "c", "v", "b", "n", "m", ",", ".", "/", "ShiftRight", "up",
             "ControlLeft", "win", "AltLeft", "space", "AltRight", "ControlRight", "left", "down", "right"
         ];
 
-        
+        const keyEngShift = [
+            "~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "+", "backspace",
+            "tab", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "{", "}",
+            "caps", "A", "S", "D", "F", "G", "H", "J", "K", "L", ":", '"', "|", "enter",
+            "ShiftLeft", "Z", "X", "C", "V", "B", "N", "M", "<", ">", "?", "ShiftRight", "up",
+            "ControlLeft", "win", "AltLeft", "space", "AltRight", "ControlRight", "left", "down", "right"
+        ];
 
         const keyRus = [
             "ё", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "backspace",
@@ -78,18 +86,34 @@ const Keyboard = {
             "Ctrl", "win", "Alt", "space", "Alt", "Ctrl", "left", "down", "right"
         ];
 
+        const keyRusShift = [
+            "Ё", "!", '"', "№", ";", "%", ":", "?", "*", "(", ")", "_", "+", "backspace",
+            "tab", "Й", "Ц", "У", "К", "Е", "Н", "Г", "Ш", "Щ", "З", "Х", "Ъ",
+            "caps", "Ф", "Ы", "В", "А", "П", "Р", "О", "Л", "Д", "Ж", "Э", "/", "enter",
+            "Shift", "Я", "Ч", "С", "М", "И", "Т", "Ь", "Б", "Ю", ",", "Shift", "up",
+            "Ctrl", "win", "Alt", "space", "Alt", "Ctrl", "left", "down", "right"
+        ];
+
 
 
         // Creates HTML for an icon
         const createIconHTML = (icon_name) => {
             return `<i class="material-icons">${icon_name}</i>`;
         };
+        if (Keyboard.properties.language == "eng" && Keyboard.properties.shiftHold == false) {
+           keyLayout = keyEng;
+        } else if (Keyboard.properties.language == "eng" && Keyboard.properties.shiftHold == true) {
+            keyLayout = keyEngShift;
+        } else if (Keyboard.properties.language == "rus" && Keyboard.properties.shiftHold == false) {
+            keyLayout = keyRus;
+        } else if (Keyboard.properties.language == "rus" && Keyboard.properties.shiftHold == true) {
+            keyLayout = keyRusShift;
+        } 
 
-        Keyboard.properties.language == "eng" ? keyLayout = keyEng: keyLayout = keyRus;
 
         keyLayout.forEach(key => {
             const keyElement = document.createElement("button");
-            const insertLineBreak = ["backspace", "]", "ъ", "enter", "up", ].indexOf(key) !== -1;
+            const insertLineBreak = ["backspace", "]", "ъ", "}", "enter", "up", "Ъ" ].indexOf(key) !== -1;
             let i = keyLayout.indexOf(key);
             let keyCode = keysCode[i];
             // Add attributes/classes
@@ -302,17 +326,23 @@ window.addEventListener("DOMContentLoaded", function () {
     Keyboard.init();
 });
 window.addEventListener("keyup", (event) => {
-    document.querySelectorAll('.keyboard__key').forEach((element) =>{
-        element.classList.remove("active")
-    })
+    if (event.code !== "CapsLock") {
+        document.querySelectorAll('.keyboard__key').forEach((element) =>{
+            element.classList.remove("active")
+        })
+    }
     // document.querySelector('.'+event.code+'').classList.add("active");
 
 // console.log(event.code)
 });
 
 window.addEventListener("keydown", (event) => {
-    document.querySelector('.'+event.code+'').classList.add("active");
-
+    if (event.code == "CapsLock") {
+        document.querySelector('.'+event.code+'').classList.toggle("active");
+    } else {
+        document.querySelector('.'+event.code+'').classList.add("active");
+    }
+    
 // console.log(event.code)
 });
 
