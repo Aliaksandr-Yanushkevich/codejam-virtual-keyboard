@@ -24,10 +24,11 @@ const Keyboard = {
         this.textarea = document.createElement('textarea'); //create textarea and add it into wrapper
         this.textarea.className = 'text-field';
         this.textarea.setAttribute('type', 'text');
+        this.textarea.placeholder = "Created by Aliaksandr Yanushkevich. Rolling Scopes School 2019-Q3";
         this.wrapper.appendChild(this.textarea);
 
         this.keysContainer = document.createElement('section');
-        this.keysContainer.classList.add('keyboard', 'keyboard--hidden');
+        this.keysContainer.classList.add('keyboard');
 
         this.keysContainer.appendChild(this._createKeys());
         this.wrapper.appendChild(this.keysContainer);
@@ -91,14 +92,23 @@ const Keyboard = {
         const createIconHTML = (icon_name) => {
             return `<i class="material-icons">${icon_name}</i>`;
         };
-        if ((Keyboard.properties.language == false && Keyboard.properties.shiftLeftHold == false) || (Keyboard.properties.language == false && Keyboard.properties.shiftRightHold == false)) {
-            keyLayout = keyEng;
+        if (Keyboard.properties.language == false && Keyboard.properties.shiftLeftHold == false) { // Keyboard.properties.language(false) = eng
+            keyLayout = keyEng;                                                                    // Keyboard.properties.language(true) = rus
         }
-        else if ((Keyboard.properties.language == false && Keyboard.properties.shiftLeftHold == true) || (Keyboard.properties.language == false && Keyboard.properties.shiftRightHold == true)) {
+
+        else if (Keyboard.properties.language == false && Keyboard.properties.shiftLeftHold == true) {
             keyLayout = keyEngShift;
-        } else if ((Keyboard.properties.language == true && Keyboard.properties.shiftLeftHold == false) || (Keyboard.properties.language == true && Keyboard.properties.shiftRightHold == false)) {
+        }
+        else if (Keyboard.properties.language == false && Keyboard.properties.shiftRightHold == true) {
+            keyLayout = keyEngShift;
+        }
+        else if (Keyboard.properties.language == true && Keyboard.properties.shiftLeftHold == false) {
             keyLayout = keyRus;
-        } else if ((Keyboard.properties.language == true && Keyboard.properties.shiftLeftHold == true) || (Keyboard.properties.language == true && Keyboard.properties.shiftRightHold == true)) {
+        }
+        else if (Keyboard.properties.language == true && Keyboard.properties.shiftLeftHold == true) {
+            keyLayout = keyRusShift;
+        }
+        else if (Keyboard.properties.language == true && Keyboard.properties.shiftRightHold == true) {
             keyLayout = keyRusShift;
         }
 
@@ -227,7 +237,9 @@ const Keyboard = {
                 default:
 
                     Keyboard.properties.capsLock == false ? keyElement.textContent = key.toLowerCase() : keyElement.textContent = key.toUpperCase();
-                    Keyboard.properties.shiftLeftHold == false && Keyboard.properties.shiftRightHold == false ? keyElement.textContent = key.toLowerCase() : keyElement.textContent = key.toUpperCase();
+                    if (Keyboard.properties.shiftLeftHold == true || Keyboard.properties.shiftRightHold == true) {
+                        keyElement.textContent = key.toLocaleUpperCase();
+                    }
 
                     break;
             }
@@ -274,8 +286,7 @@ window.addEventListener("keyup", (event) => { // handling key highlighter
         })
     }
 });
-// let ShiftFlag = false;
-// let AltFlag = false;
+
 window.addEventListener("keydown", (event) => { // handling language switch
     if (event.code == "ShiftLeft") {
         Keyboard.properties.shiftLeftHold = true;
@@ -297,17 +308,13 @@ window.addEventListener("keydown", (event) => { // handling language switch
         Keyboard.properties.altRightHold = true;
     }
 
-    if ((event.code == "AltLeft" && Keyboard.properties.shiftLeftHold == true) || (event.code == "AltRight" && Keyboard.properties.shiftRightHold == true)) {
-        Keyboard.properties.shiftHold = !Keyboard.properties.shiftHold;
+    if (event.code == "AltLeft" && Keyboard.properties.shiftLeftHold == true) {
         Keyboard.properties.language = !Keyboard.properties.language;
         document.body.innerHTML = '';
         Keyboard.init();
     }
 
     if (event.code == "ShiftLeft" && Keyboard.properties.altLeftHold == true) {
-        // Keyboard.properties.altHold = !Keyboard.properties.altHold;
-        // document.querySelector('.ShiftLeft').classList.add("active");
-        // document.querySelector('.AlttLeft').classList.add("active");
         Keyboard.properties.language = !Keyboard.properties.language;
         document.body.innerHTML = '';
         Keyboard.init();
@@ -330,3 +337,8 @@ window.addEventListener("keydown", (event) => { // handling language switch
     }
 
 });
+
+window.addEventListener('mouseup', (e) => {
+    let eventText = e.target.textContent;
+    console.log(eventText)
+})
