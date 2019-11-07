@@ -1,7 +1,8 @@
 const Keyboard = {
 
     properties: {
-        shiftHold: false,
+        shiftLeftHold: false,
+        shiftRightHold: false,
         altHold: false,
         value: "",
         capsLock: false,
@@ -89,13 +90,14 @@ const Keyboard = {
         const createIconHTML = (icon_name) => {
             return `<i class="material-icons">${icon_name}</i>`;
         };
-        if (Keyboard.properties.language == "0" && Keyboard.properties.shiftHold == false) {
+        if ((Keyboard.properties.language == false && Keyboard.properties.shiftLeftHold == false) || (Keyboard.properties.language == false && Keyboard.properties.shiftRightHold == false)) {
             keyLayout = keyEng;
-        } else if (Keyboard.properties.language == "0" && Keyboard.properties.shiftHold == true) {
+        }
+        else if ((Keyboard.properties.language == false && Keyboard.properties.shiftLeftHold == true) || (Keyboard.properties.language == false && Keyboard.properties.shiftRightHold == true)) {
             keyLayout = keyEngShift;
-        } else if (Keyboard.properties.language == "1" && Keyboard.properties.shiftHold == false) {
+        } else if ((Keyboard.properties.language == true && Keyboard.properties.shiftLeftHold == false) || (Keyboard.properties.language == true && Keyboard.properties.shiftRightHold == false)) {
             keyLayout = keyRus;
-        } else if (Keyboard.properties.language == "1" && Keyboard.properties.shiftHold == true) {
+        } else if ((Keyboard.properties.language == true && Keyboard.properties.shiftLeftHold == true) || (Keyboard.properties.language == true && Keyboard.properties.shiftRightHold == true)) {
             keyLayout = keyRusShift;
         }
 
@@ -126,6 +128,9 @@ const Keyboard = {
                 case "caps":
                     keyElement.classList.add("keyboard__key--caps");
                     keyElement.innerHTML = createIconHTML("keyboard_capslock");
+                    if (Keyboard.properties.capsLock == true) {
+                        keyElement.classList.add("active");
+                    }
 
                     break;
 
@@ -138,12 +143,18 @@ const Keyboard = {
                 case "ShiftLeft":
                     keyElement.classList.add("keyboard__key--shift");
                     keyElement.textContent = "Shift";
+                    if (Keyboard.properties.shiftLeftHold == true) {
+                        keyElement.classList.add("active");
+                    }
 
                     break;
 
                 case "ShiftRight":
                     keyElement.classList.add("keyboard__key--shift");
                     keyElement.textContent = "Shift";
+                    if (Keyboard.properties.shiftRightHold == true) {
+                        keyElement.classList.add("active");
+                    }
 
                     break;
 
@@ -210,6 +221,7 @@ const Keyboard = {
                 default:
 
                     Keyboard.properties.capsLock == false ? keyElement.textContent = key.toLowerCase() : keyElement.textContent = key.toUpperCase();
+                    Keyboard.properties.shiftLeftHold == false && Keyboard.properties.shiftRightHold == false ? keyElement.textContent = key.toLowerCase() : keyElement.textContent = key.toUpperCase();
 
                     break;
             }
@@ -230,9 +242,15 @@ window.addEventListener("DOMContentLoaded", function () {
 });
 window.addEventListener("keyup", (event) => { // handling key highlighter
     if (event.code !== "CapsLock") {
-        if (event.code == "ShiftLeft" || event.code == "ShiftRight") {
-            document.querySelector('.' + event.code + '').classList.add("active");
-            Keyboard.properties.shiftHold = false;
+        if (event.code == "ShiftLeft") {
+            Keyboard.properties.shiftLeftHold = false;
+            document.body.innerHTML = '';
+            Keyboard.init();
+        }
+        if (event.code == "ShiftRight") {
+            Keyboard.properties.shiftRightHold = false;
+            document.body.innerHTML = '';
+            Keyboard.init();
         }
         if (event.code == "AltLeft" || event.code == "AltRight") {
             event.preventDefault();
@@ -248,16 +266,23 @@ window.addEventListener("keyup", (event) => { // handling key highlighter
 // let ShiftFlag = false;
 // let AltFlag = false;
 window.addEventListener("keydown", (event) => { // handling language switch
-    if (event.code == "ShiftLeft" || event.code == "ShiftRight") {
-        document.querySelector('.' + event.code + '').classList.add("active");
-        Keyboard.properties.shiftHold = true;
+    if (event.code == "ShiftLeft") {
+        Keyboard.properties.shiftLeftHold = true;
+        document.body.innerHTML = '';
+        Keyboard.init();
     }
+    if (event.code == "ShiftRight") {
+        Keyboard.properties.shiftRightHold = true;
+        document.body.innerHTML = '';
+        Keyboard.init();
+    }
+
     if (event.code == "AltLeft" || event.code == "AltRight") {
         document.querySelector('.' + event.code + '').classList.add("active");
         Keyboard.properties.altHold = true;
     }
 
-    if ((event.code == "AltLeft" && Keyboard.properties.shiftHold == true) || (event.code == "AltRight" && Keyboard.properties.shiftHold == true)) {
+    if ((event.code == "AltLeft" && Keyboard.properties.shiftLeftHold == true) || (event.code == "AltRight" && Keyboard.properties.shiftRightHold == true)) {
         Keyboard.properties.shiftHold = !Keyboard.properties.shiftHold;
         // document.querySelector('.' + event.code + '').classList.add("active");
         Keyboard.properties.language = !Keyboard.properties.language;
@@ -275,13 +300,14 @@ window.addEventListener("keydown", (event) => { // handling language switch
     }
 
     if (event.code == "CapsLock") {
-        document.querySelector('.' + event.code + '').classList.toggle("active");
+        // document.querySelector('.' + event.code + '').classList.toggle("active");
         Keyboard.properties.capsLock = !Keyboard.properties.capsLock;
         document.body.innerHTML = '';
         Keyboard.init();
-        document.querySelector('.' + event.code + '').classList.toggle("active");
+    }
 
-    } else if (event.code == "Tab") {
+
+    else if (event.code == "Tab") {
         event.preventDefault();
         document.querySelector('.' + event.code + '').classList.add("active");
 
