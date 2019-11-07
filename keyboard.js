@@ -2,6 +2,7 @@ const Keyboard = {
 
     properties: {
         shiftHold: false,
+        altHold: false,
         value: "",
         capsLock: false,
         language: false
@@ -229,39 +230,57 @@ window.addEventListener("DOMContentLoaded", function () {
 });
 window.addEventListener("keyup", (event) => { // handling key highlighter
     if (event.code !== "CapsLock") {
-        event.preventDefault();
+        if (event.code == "ShiftLeft" || event.code == "ShiftRight") {
+            document.querySelector('.' + event.code + '').classList.add("active");
+            Keyboard.properties.shiftHold = false;
+        }
+        if (event.code == "AltLeft" || event.code == "AltRight") {
+            event.preventDefault();
+            document.querySelector('.' + event.code + '').classList.add("active");
+            Keyboard.properties.altHold = false;
+        }
+
         document.querySelectorAll('.keyboard__key').forEach((element) => {
             element.classList.remove("active")
         })
     }
 });
-let ShiftFlag = false;
-let AltFlag = false;
+// let ShiftFlag = false;
+// let AltFlag = false;
 window.addEventListener("keydown", (event) => { // handling language switch
     if (event.code == "ShiftLeft" || event.code == "ShiftRight") {
-        ShiftFlag = true;
+        document.querySelector('.' + event.code + '').classList.add("active");
+        Keyboard.properties.shiftHold = true;
     }
     if (event.code == "AltLeft" || event.code == "AltRight") {
-        AltFlag = true;
+        document.querySelector('.' + event.code + '').classList.add("active");
+        Keyboard.properties.altHold = true;
     }
 
-    if ((event.code == "AltLeft" && ShiftFlag == true) || (event.code == "AltRight" && ShiftFlag == true)) {
-
-        ShiftFlag = false;
-        Keyboard.properties.language = !Keyboard.properties.language;
-        document.body.innerHTML = '';
-        Keyboard.init();
-
-        console.log(Keyboard.properties.language);
-    }
-    if ((event.code == "ShiftLeft" && AltFlag == true) || (event.code == "ShiftRight" && AltFlag == true)) {
-        AltFlag = false;
+    if ((event.code == "AltLeft" && Keyboard.properties.shiftHold == true) || (event.code == "AltRight" && Keyboard.properties.shiftHold == true)) {
+        Keyboard.properties.shiftHold = !Keyboard.properties.shiftHold;
+        // document.querySelector('.' + event.code + '').classList.add("active");
         Keyboard.properties.language = !Keyboard.properties.language;
         document.body.innerHTML = '';
         Keyboard.init();
     }
+
+    if ((event.code == "ShiftLeft" && Keyboard.properties.altHold == true && event.code == "AlttLeft") || (event.code == "ShiftRight" && Keyboard.properties.altHold == true && event.code == "AltRight")) {
+        Keyboard.properties.altHold = !Keyboard.properties.altHold;
+        // document.querySelector('.ShiftLeft').classList.add("active");
+        // document.querySelector('.AlttLeft').classList.add("active");
+        Keyboard.properties.language = !Keyboard.properties.language;
+        document.body.innerHTML = '';
+        Keyboard.init();
+    }
+
     if (event.code == "CapsLock") {
         document.querySelector('.' + event.code + '').classList.toggle("active");
+        Keyboard.properties.capsLock = !Keyboard.properties.capsLock;
+        document.body.innerHTML = '';
+        Keyboard.init();
+        document.querySelector('.' + event.code + '').classList.toggle("active");
+
     } else if (event.code == "Tab") {
         event.preventDefault();
         document.querySelector('.' + event.code + '').classList.add("active");
@@ -271,5 +290,3 @@ window.addEventListener("keydown", (event) => { // handling language switch
     }
 
 });
-
-
