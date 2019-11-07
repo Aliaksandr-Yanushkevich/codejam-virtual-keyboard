@@ -3,7 +3,8 @@ const Keyboard = {
     properties: {
         shiftLeftHold: false,
         shiftRightHold: false,
-        altHold: false,
+        altLeftHold: false,
+        altRightHold: false,
         value: "",
         capsLock: false,
         language: false
@@ -179,13 +180,18 @@ const Keyboard = {
                 case "AltLeft":
                     keyElement.classList.add("keyboard__key--alt");
                     keyElement.textContent = "Alt";
+                    if (Keyboard.properties.altLeftHold == true) {
+                        keyElement.classList.add("active");
+                    }
 
                     break;
 
                 case "AltRight":
                     keyElement.classList.add("keyboard__key--alt");
                     keyElement.textContent = "Alt";
-
+                    if (Keyboard.properties.altRightHold == true) {
+                        keyElement.classList.add("active");
+                    }
                     break;
 
                 case "space":
@@ -252,10 +258,15 @@ window.addEventListener("keyup", (event) => { // handling key highlighter
             document.body.innerHTML = '';
             Keyboard.init();
         }
-        if (event.code == "AltLeft" || event.code == "AltRight") {
+        if (event.code == "AltLeft") {
             event.preventDefault();
             document.querySelector('.' + event.code + '').classList.add("active");
-            Keyboard.properties.altHold = false;
+            Keyboard.properties.altLeftHold = false;
+        }
+        if (event.code == "AltRight") {
+            event.preventDefault();
+            document.querySelector('.' + event.code + '').classList.add("active");
+            Keyboard.properties.altRightHold = false;
         }
 
         document.querySelectorAll('.keyboard__key').forEach((element) => {
@@ -277,21 +288,24 @@ window.addEventListener("keydown", (event) => { // handling language switch
         Keyboard.init();
     }
 
-    if (event.code == "AltLeft" || event.code == "AltRight") {
+    if (event.code == "AltLeft") {
         document.querySelector('.' + event.code + '').classList.add("active");
-        Keyboard.properties.altHold = true;
+        Keyboard.properties.altLeftHold = true;
+    }
+    if (event.code == "AltRight") {
+        document.querySelector('.' + event.code + '').classList.add("active");
+        Keyboard.properties.altRightHold = true;
     }
 
     if ((event.code == "AltLeft" && Keyboard.properties.shiftLeftHold == true) || (event.code == "AltRight" && Keyboard.properties.shiftRightHold == true)) {
         Keyboard.properties.shiftHold = !Keyboard.properties.shiftHold;
-        // document.querySelector('.' + event.code + '').classList.add("active");
         Keyboard.properties.language = !Keyboard.properties.language;
         document.body.innerHTML = '';
         Keyboard.init();
     }
 
-    if ((event.code == "ShiftLeft" && Keyboard.properties.altHold == true && event.code == "AlttLeft") || (event.code == "ShiftRight" && Keyboard.properties.altHold == true && event.code == "AltRight")) {
-        Keyboard.properties.altHold = !Keyboard.properties.altHold;
+    if (event.code == "ShiftLeft" && Keyboard.properties.altLeftHold == true) {
+        // Keyboard.properties.altHold = !Keyboard.properties.altHold;
         // document.querySelector('.ShiftLeft').classList.add("active");
         // document.querySelector('.AlttLeft').classList.add("active");
         Keyboard.properties.language = !Keyboard.properties.language;
