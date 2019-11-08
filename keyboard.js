@@ -32,14 +32,14 @@ const Keyboard = {
 
         this.keysContainer.appendChild(this._createKeys());
         this.wrapper.appendChild(this.keysContainer);
-        document.querySelectorAll(".text-field")
-        forEach(element => {
-            element.addEventListener("focus", () => {
-                document.open(element.value, currentValue => {
-                    element.value = currentValue;
-                });
-            });
-        });
+        // document.querySelectorAll(".text-field")
+        // forEach(element => {
+        //     element.addEventListener("focus", () => {
+        //         document.open(element.value, currentValue => {
+        //             element.value = currentValue;
+        //         });
+        //     });
+        // });
     },
 
     _createKeys() {
@@ -337,8 +337,10 @@ window.addEventListener("keydown", (event) => { // handling language switch
     }
 
 });
-
-window.addEventListener('mouseup', (e) => {
-    let eventText = e.target.textContent;
-    console.log(eventText)
-})
+Keyboard.init();
+let keysClick = document.querySelectorAll('button');
+for (let i = 0; i < keysClick.length; i++) {
+    keysClick[i].addEventListener('click', (event) => {
+        console.log(event.target.textContent)
+    })
+}
